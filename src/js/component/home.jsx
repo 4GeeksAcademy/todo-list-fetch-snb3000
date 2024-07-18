@@ -1,26 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  const [todos, setTodos] = useState([]);
+  const apiUrl = "https://playground.4geeks.com/todo";
+  const createTodolist = async () => {
+    let response = await fetch(apiUrl + "/users/snb3000", {
+      method: "POST",
+    });
+    if (response.ok) {
+      let data = await response.json();
+      console.log(data);
+      return true;
+    } else {
+      console.log("error");
+      return false;
+    }
+  };
+  const getTodolist = async () => {
+    let response = await fetch(apiUrl + "/users/snb3000");
+    if (response.status === 200) {
+      let data = await response.json();
+      console.log(data);
+      setTodos(data.todos);
+      return true;
+    } else if (response.status === 404) {
+      let result = await createTodolist();
+      if (result) {
+        getTodolist();
+      } else {
+        console.log("error creating todolist");
+        return false;
+      }
+    } else {
+      console.log("error getting todolist");
+      return false;
+    }
+  };
+  useEffect(() => {
+    getTodolist();
+  }, []);
+  return <div className="text-center"></div>;
 };
 
 export default Home;
