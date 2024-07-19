@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import { TodoList } from "./TodoList.jsx";
+import { InputTodos } from "./InputTodos.jsx";
 
 //create your first component
 const Home = () => {
@@ -43,7 +42,13 @@ const Home = () => {
   useEffect(() => {
     getTodolist();
   }, []);
-  return <div className="text-center"></div>;
+  return (
+    <div className="text-center">
+      <h1>Todo List</h1>
+      <InputTodos getTodoList={getTodolist} apiUrl={apiUrl} />
+      <TodoList todos={todos} setTodos={setTodos} />
+    </div>
+  );
 };
 
 export default Home;
