@@ -46,7 +46,7 @@ const Home = () => {
     <div className="text-center">
       <h1>Todo List</h1>
       <InputTodos getTodoList={getTodolist} apiUrl={apiUrl} />
-      <TodoList todos={todos} setTodos={setTodos} />
+      <TodoList todos={todos} getTodoList={getTodolist} apiUrl={apiUrl} />
     </div>
   );
 };
